@@ -1,6 +1,6 @@
-##Testing MPI Ports API
+## Testing MPI Ports API
 
-# Without a nameserver
+### Without a nameserver
 
 To avoid useing a name server and pass the port from client to server via intermediary text file, comment out –DPUBLISH_NAME in Makefile, build, and launch like so:
 
@@ -8,7 +8,7 @@ mpirun -np 1 ./server &
 
 mpirun -np 1 ./client
 
-#To use a name server: 
+### To use a name server: 
 
 Start a name service to handle name publishing. In OpenMPI you can do this via:
 
