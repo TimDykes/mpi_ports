@@ -5,13 +5,17 @@
 # Compiler
 CXX = mpicxx
 
-# Target
+# Targets
 TARG0 = server
 TARG1 = client
 
+# Use name server
+# Comment this to manually pass port name from server to client
+NAMESERVER = -DPUBLISH_NAME
+
 # General Compiler flags
-OPT0 = -Wall -O2 -DSERVER=1 -DPUBLISH_NAME
-OPT1 = -Wall -O2 -DCLIENT=1 -DPUBLISH_NAME
+OPT0 = -Wall -O2 -DSERVER=1 $(NAMESERVER)
+OPT1 = -Wall -O2 -DCLIENT=1 $(NAMESERVER)
 
 # Additional libraries
 LIBS =
@@ -38,4 +42,4 @@ client-server1.o: client-server.cpp
 
 clean:
 	rm -f *.o
-	rm -f $(TARGET)%
+	rm -f $(TARG0) $(TARG1)
