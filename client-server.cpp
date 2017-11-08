@@ -2,8 +2,9 @@
 // MPI Demo
 //---------------------------------------------------------------
 #include <iostream>
+#include <cstring>
 #include <mpi.h>
-
+#include <fstream>
 int main(int argc, char* argv[])
 {
     int rank, size;
@@ -23,7 +24,9 @@ int main(int argc, char* argv[])
 #ifdef PUBLISH_NAME
     MPI_Publish_name("my_service_name", MPI_INFO_NULL, port);
 #else    
-    printf("%s\n",port);
+    std::ofstream ofile("port.txt");
+    ofile << port;
+    ofile.close();
 #endif
 
     int ret = MPI_Comm_accept(port, MPI_INFO_NULL, 0, MPI_COMM_WORLD, &intercomm);
@@ -48,11 +51,15 @@ int main(int argc, char* argv[])
 #ifdef PUBLISH_NAME
     MPI_Lookup_name("my_service_name", MPI_INFO_NULL, port);
 #else
-    std::cout << "Enter port:\n";
-    std::string p;    
-    std::cin >> p;
-    if(p.size() > MPI_MAX_PORT_NAME){
-        std::cout << "Err, port name too long\n";
+    std::ifstream ifile("port.txt");
+    std::string p;
+    if(ifile.is_open())
+    {
+        ifile >> p;
+        ifile.close();
+    }
+    if(p.size() > MPI_MAX_PORT_NAME || p.size() == 0){
+        std::cout << "Err, port name too long or empty\n";
         MPI_Finalize();
         return 0;
     } else {

@@ -3,7 +3,7 @@
 #-----------------------------------#
 
 # Compiler
-CXX = mpicxx
+CXX = CC
 
 # Targets
 TARG0 = server
@@ -11,11 +11,11 @@ TARG1 = client
 
 # Use name server
 # Comment this to manually pass port name from server to client
-NAMESERVER = -DPUBLISH_NAME
+NAMESERVER = #-DPUBLISH_NAME
 
 # General Compiler flags
-OPT0 = -Wall -O2 -DSERVER=1 $(NAMESERVER)
-OPT1 = -Wall -O2 -DCLIENT=1 $(NAMESERVER)
+OPT0 = -O0 -g -DSERVER=1 $(NAMESERVER)
+OPT1 = -O0 -g -DCLIENT=1 $(NAMESERVER)
 
 # Additional libraries
 LIBS =
