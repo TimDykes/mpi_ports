@@ -1,6 +1,9 @@
 # Testing MPI Ports API
 -------
 ## Local machine / OpenMPI
+
+Default build is for Cray MPICH, swap environment option in Makefile to build for OpenMPI.
+
 ### Without a nameserver
 
 Default build is without a nameserver, the server passes the MPI port name by writing to a file (port.txt) and the client reads from this. To test:
