@@ -1,21 +1,40 @@
-#-----------------------------------#
-#            Demo Makefile            #
-#-----------------------------------#
+#----------------------------------------------------------#
+#                      Demo Makefile                       #
+#----------------------------------------------------------#
 
-# Compiler
-CXX = CC
+# ----------------------- OPTIONS -------------------------#
+
+# Environment (select CRAY or OMPI)
+COMP_ENV = CRAY
+#COMP_ENV = OMPI
+
+# Uncomment this to use name server (e.g. opmi-server)
+#NAMESERVER = -DPUBLISH_NAME
+
+# ---------------------------------------------------------#
+
+# Environment settings
+ifeq (CRAY,$(findstring CRAY,$(COMP_ENV)))
+  CXX       = CC
+  CRAY_OPT  = -craympich-dpm
+else
+  CXX       = mpicxx
+endif
+
+# make DEBUG=1 for debug build
+ifeq ($(DEBUG), 1)
+  OPTIMIZE = -g -O0
+else
+  OPTIMIZE = -O2
+endif
 
 # Targets
 TARG0 = server
 TARG1 = client
 
-# Use name server
-# Comment this to manually pass port name from server to client
-NAMESERVER = #-DPUBLISH_NAME
-
-# General Compiler flags
-OPT0 = -O0 -g -DSERVER=1 $(NAMESERVER)
-OPT1 = -O0 -g -DCLIENT=1 $(NAMESERVER)
+# Flags 
+OPT0 = -DSERVER=1 $(NAMESERVER) $(OPTIMIZE) $(CRAY_OPT)
+OPT1 = -DCLIENT=1 $(NAMESERVER) $(OPTIMIZE) $(CRAY_OPT)
 
 # Additional libraries
 LIBS =
