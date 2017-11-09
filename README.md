@@ -1,4 +1,4 @@
-# Testing MPI Ports API
+# Testing MPI Ports API for Dynamic Process Management (DPM)
 -------
 ## Local machine / OpenMPI
 
