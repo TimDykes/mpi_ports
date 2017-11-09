@@ -33,9 +33,9 @@ int main(int argc, char* argv[])
     if(ret != MPI_SUCCESS){
         char error_string[1024];
         int length_of_error_string;
-
         MPI_Error_string(ret, error_string, &length_of_error_string);
         printf("%3d: %s\n", rank, error_string);
+        MPI_Abort(MPI_COMM_WORLD, 1);
     } else {
         std::cout << "Server: Accepted comms on port: " << port << std::endl;
     }
@@ -60,8 +60,7 @@ int main(int argc, char* argv[])
     }
     if(p.size() > MPI_MAX_PORT_NAME || p.size() == 0){
         std::cout << "Err, port name too long or empty\n";
-        MPI_Finalize();
-        return 0;
+        MPI_Abort(MPI_COMM_WORLD, 1);
     } else {
         strcpy(port, p.c_str());
     } 
@@ -71,11 +70,11 @@ int main(int argc, char* argv[])
     if(ret != MPI_SUCCESS){
         char error_string[1024];
         int length_of_error_string;
-
         MPI_Error_string(ret, error_string, &length_of_error_string);
         printf("%3d: %s\n", rank, error_string);
+	MPI_Abort(MPI_COMM_WORLD, 1);
     } else {
-        std::cout << "Client connected to port: " << port;
+        std::cout << "Client: Connected to port: " << port << std::endl;
     }
 #endif
 
