@@ -62,9 +62,13 @@ Default build is without a nameserver, the server passes the MPI port name by wr
 
 Test:
 
-    aprun -n 1 -p my_pdomain ./server &
+    > aprun -n 1 -p my_pdomain ./server &
+    < Server rank: 0 of 1 ranks
     // If running interactively its worth checking port.txt has appeared before running client
-    aprun -n 1 -p my_pdomain ./client
+    > aprun -n 1 -p my_pdomain ./client
+    < Client rank: 0 of 1 processes
+    < Server: Accepted comms on port: tag#0$nic_id#0100000000000000000000006D00000000000000$cdm_id#23899$
+    < Client connected to port: tag#0$nic_id#0100000000000000000000006D00000000000000$cdm_id#23899$
 
 ### With a name server: 
 
